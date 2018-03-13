@@ -13,7 +13,7 @@ public class Ball : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
 
-        rb2d.AddForce(new Vector2(1, 1) * speed);
+        InitialKick();
     }
 
     private void Update()
@@ -69,7 +69,15 @@ public class Ball : MonoBehaviour
         //
         // 1  -0.5  0  0.5   1  <- x value
         // ===================  <- racket
-        //
-        return (ballPos.x - racketPos.x) / racketWidth;
+
+        float result = ((ballPos.x - racketPos.x) / racketWidth) * 0.75f;
+
+        return result;
+    }
+
+    public void InitialKick()
+    {
+        rb2d.velocity = Vector2.zero;
+        rb2d.AddForce(new Vector2(1, 1) * speed);
     }
 }
