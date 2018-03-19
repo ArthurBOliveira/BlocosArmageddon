@@ -6,7 +6,7 @@ public class Destructible : MonoBehaviour
 {
     public int life;
 
-    public void CauseDamage(int dmg)
+    public virtual void CauseDamage(int dmg)
     {
         life -= dmg;
 
