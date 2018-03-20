@@ -16,14 +16,14 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         //Indestructibles
-        Instantiate(objects[0], new Vector3(5, 0), Quaternion.identity);
-        Instantiate(objects[0], new Vector3(-5, 0), Quaternion.identity);
-        Instantiate(objects[0], new Vector3(5.64f, 0), Quaternion.identity);
-        Instantiate(objects[0], new Vector3(-5.64f, 0), Quaternion.identity);
+        Instantiate(objects[0], new Vector3(2.75f, -1), Quaternion.identity);
+        Instantiate(objects[0], new Vector3(-2.75f, -1), Quaternion.identity);
+        Instantiate(objects[0], new Vector3(3.2f, -1), Quaternion.identity);
+        Instantiate(objects[0], new Vector3(-3.25f, -1), Quaternion.identity);
 
         //Blocks
-        for (int y = 1; y <= 4; y++)
-            for (int x = -5; x <= 5; x++)
+        for (float y = 0; y <= 3.5f; y += 0.55f)
+            for (float x = -2.75f; x <= 2.75f; x += 0.45f)
                 Instantiate(objects[1], new Vector3(x, y), Quaternion.identity);
     }
 
