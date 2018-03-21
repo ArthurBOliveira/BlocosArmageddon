@@ -77,7 +77,9 @@ public class Ball : MonoBehaviour
 
     public void InitialKick()
     {
+        float x = Random.Range(-0.5f, 0.51f);
+
         rb2d.velocity = Vector2.zero;
-        rb2d.AddForce(new Vector2(1, 1) * speed);
+        rb2d.AddForce(new Vector2(x, 1) * speed);
     }
 }

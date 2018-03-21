@@ -44,13 +44,34 @@ public class GameController : MonoBehaviour
     private IEnumerator DelayedStart()
     {
         txtCountDown.text = "3";
-        yield return new WaitForSeconds(0.75f);
+        for (int framecnt = 0; framecnt < 30; framecnt++)
+        {
+            yield return new WaitForEndOfFrame();
+            txtCountDown.fontSize -= 2;
+        }
+        txtCountDown.fontSize = 60;
+        //yield return new WaitForSeconds(0.75f);
+
         txtCountDown.text = "2";
-        yield return new WaitForSeconds(0.75f);
+        for (int framecnt = 0; framecnt < 30; framecnt++)
+        {
+            yield return new WaitForEndOfFrame();
+            txtCountDown.fontSize -= 2;
+        }
+        txtCountDown.fontSize = 60;
+        //yield return new WaitForSeconds(0.75f);
+
         txtCountDown.text = "1";
-        yield return new WaitForSeconds(0.75f);
+        for (int framecnt = 0; framecnt < 30; framecnt++)
+        {
+            yield return new WaitForEndOfFrame();
+            txtCountDown.fontSize -= 2;
+        }
+        txtCountDown.fontSize = 60;
+        //yield return new WaitForSeconds(0.75f);
+
         txtCountDown.text = "Start!";
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.75f);
         txtCountDown.text = "";
 
         SpawnObjects();
@@ -62,10 +83,10 @@ public class GameController : MonoBehaviour
     private void SpawnObjects()
     {
         //Indestructibles
-        Instantiate(objects[0], new Vector3(2.75f, -1), Quaternion.identity);
-        Instantiate(objects[0], new Vector3(-2.75f, -1), Quaternion.identity);
-        Instantiate(objects[0], new Vector3(3.2f, -1), Quaternion.identity);
-        Instantiate(objects[0], new Vector3(-3.25f, -1), Quaternion.identity);
+        Instantiate(objects[0], new Vector3(2.0f, -1), Quaternion.identity);
+        Instantiate(objects[0], new Vector3(-2.0f, -1), Quaternion.identity);
+        //Instantiate(objects[0], new Vector3(3.2f, -1), Quaternion.identity);
+        //Instantiate(objects[0], new Vector3(-3.25f, -1), Quaternion.identity);
 
         //Blocks
         for (float y = 0; y <= 3.5f; y += 0.55f)
@@ -82,7 +103,7 @@ public class GameController : MonoBehaviour
     #region Publics
     public void ResetBall()
     {
-        ballObject.transform.position = new Vector3(0, -4);
+        ballObject.transform.position = new Vector3(0, -3.8f);
 
         ball.InitialKick();
     }
