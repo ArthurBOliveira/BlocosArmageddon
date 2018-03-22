@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
     public GameObject ballObject;
 
     public Text txtTime;
+    public Text txtTimeChange;
     public Text txtCountDown;
 
     private Ball ball;
@@ -98,12 +99,33 @@ public class GameController : MonoBehaviour
     {
         Destroy(ball);
     }
+
+    private IEnumerator TimeChangeAnimation(int change)
+    {
+        Debug.Log(change);
+
+        txtTimeChange.text = change.ToString();
+        for (int framecnt = 0; framecnt < 30; framecnt++)
+        {
+            yield return new WaitForSeconds(0.15f);
+            txtTimeChange.fontSize -= 1;
+            txtTimeChange.rectTransform.position = new Vector3(txtTimeChange.rectTransform.position.x + 2, -34);
+        }
+        txtTimeChange.fontSize = 30;
+        txtTimeChange.rectTransform.position = new Vector3(127, -34);
+
+        txtTimeChange.text = "";
+    }
     #endregion
 
     #region Publics
     public void ResetBall()
     {
         ballObject.transform.position = new Vector3(0, -3.8f);
+
+        time -= 5;
+
+        //StartCoroutine(TimeChangeAnimation(-5));
 
         ball.InitialKick();
     }
