@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
@@ -7,15 +8,22 @@ public class GameController : MonoBehaviour
     // 0 - Indestructible; 1 - Block; 2 - LargeBlock; 3 - Walker; 
     public GameObject[] objects;
     public GameObject ballObject;
+    public GameObject btnRestart;
+    public GameObject btnContinue;
 
     public Text txtTime;
     public Text txtTimeChange;
     public Text txtCountDown;
 
+    public string currScene;
+    public string nextScene;
+
+    private int currObjects;
+
     private Ball ball;
     private float time;
 
-    private bool countingTime;
+    private bool isCountingTime;
 
     #region Privates
     private void Awake()
@@ -25,14 +33,23 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        time = 120;
+        btnContinue.SetActive(false);
+        btnRestart.SetActive(false);
+        time = 180;
         ball.gameObject.SetActive(false);
-        countingTime = false;
+        isCountingTime = false;
         StartCoroutine(DelayedStart());
     }
+
     private void Update()
     {
-        if (!countingTime) return;
+        if (!isCountingTime) return;
+
+        if (time <= 0)
+            GameOver();
+
+        if (currObjects <= 0)
+            Win();
 
         time -= Time.deltaTime;
 
@@ -40,6 +57,40 @@ public class GameController : MonoBehaviour
         int sec = (int)time % 60;
 
         txtTime.text = min + ":" + sec;
+    }
+
+    private void SpawnObjects()
+    {
+        //Indestructibles
+        Instantiate(objects[0], new Vector3(2.0f, -1), Quaternion.identity);
+        Instantiate(objects[0], new Vector3(-2.0f, -1), Quaternion.identity);
+        //Instantiate(objects[0], new Vector3(3.2f, -1), Quaternion.identity);
+        //Instantiate(objects[0], new Vector3(-3.25f, -1), Quaternion.identity);
+
+        //Blocks
+        for (float y = 0; y <= 3.5f; y += 0.55f)
+            for (float x = -2.75f; x <= 2.75f; x += 0.45f)
+            {
+                Instantiate(objects[1], new Vector3(x, y), Quaternion.identity);
+                currObjects++;
+            }
+    }
+
+    private void GameOver()
+    {
+        ball.gameObject.SetActive(false);
+        isCountingTime = false;
+        txtCountDown.text = "Game Over";
+        btnRestart.SetActive(true);
+    }
+
+    private void Win()
+    {
+        ball.gameObject.SetActive(false);
+        isCountingTime = false;
+        txtCountDown.text = "Congratz!";
+        btnRestart.SetActive(true);
+        btnContinue.SetActive(true);
     }
 
     private IEnumerator DelayedStart()
@@ -76,28 +127,9 @@ public class GameController : MonoBehaviour
         txtCountDown.text = "";
 
         SpawnObjects();
-        countingTime = true;
+        isCountingTime = true;
         ball.gameObject.SetActive(true);
         yield return new WaitForSeconds(0);
-    }
-
-    private void SpawnObjects()
-    {
-        //Indestructibles
-        Instantiate(objects[0], new Vector3(2.0f, -1), Quaternion.identity);
-        Instantiate(objects[0], new Vector3(-2.0f, -1), Quaternion.identity);
-        //Instantiate(objects[0], new Vector3(3.2f, -1), Quaternion.identity);
-        //Instantiate(objects[0], new Vector3(-3.25f, -1), Quaternion.identity);
-
-        //Blocks
-        for (float y = 0; y <= 3.5f; y += 0.55f)
-            for (float x = -2.75f; x <= 2.75f; x += 0.45f)
-                Instantiate(objects[1], new Vector3(x, y), Quaternion.identity);
-    }
-
-    private void GameOver()
-    {
-        Destroy(ball);
     }
 
     private IEnumerator TimeChangeAnimation(int change)
@@ -128,6 +160,21 @@ public class GameController : MonoBehaviour
         //StartCoroutine(TimeChangeAnimation(-5));
 
         ball.InitialKick();
+    }
+
+    public void NextLevel()
+    {
+        SceneManager.LoadScene(currScene);
+    }
+
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(nextScene);
+    }
+
+    public void ChangeCurrObjects(int change)
+    {
+        currObjects += change;
     }
     #endregion    
 }

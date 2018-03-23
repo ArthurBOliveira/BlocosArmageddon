@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         float xPos = transform.position.x + (move * speed);
-        //xPos = transform.position.x + (Input.GetAxis("Horizontal") * speed);        
+        //float xPos = transform.position.x + (Input.GetAxis("Horizontal") * speed);
         Vector3 playerPos = new Vector3(Mathf.Clamp(xPos, xBorders * -1, xBorders), -4f, 1f);
         transform.position = playerPos;
     }
