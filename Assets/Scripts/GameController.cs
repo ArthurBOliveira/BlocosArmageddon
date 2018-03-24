@@ -176,5 +176,10 @@ public class GameController : MonoBehaviour
     {
         currObjects += change;
     }
+
+    public void PauseResumeGame()
+    {
+        Time.timeScale = Time.timeScale == 0 ? 1 : 0;
+    }
     #endregion    
 }
