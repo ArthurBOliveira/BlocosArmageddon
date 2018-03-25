@@ -18,17 +18,21 @@ public class GameController : MonoBehaviour
     public string currScene;
     public string nextScene;
 
-    private int currObjects;
+    public int score;
+
+    private int currObjects;    
+    private float time;
+    private bool isCountingTime;
 
     private Ball ball;
-    private float time;
 
-    private bool isCountingTime;
+    private AudioSource music;
 
     #region Privates
     private void Awake()
     {
         ball = ballObject.GetComponent<Ball>();
+        music = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -129,6 +133,7 @@ public class GameController : MonoBehaviour
         SpawnObjects();
         isCountingTime = true;
         ball.gameObject.SetActive(true);
+        music.Play();
         yield return new WaitForSeconds(0);
     }
 
