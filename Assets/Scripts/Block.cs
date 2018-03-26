@@ -1,17 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Block : Destructible
 {
     public Sprite[] sprites;
-
-    private SpriteRenderer rend;
-
-    private void Awake()
-    {
-        rend = GetComponent<SpriteRenderer>();
-    }
 
     public override void CauseDamage(int dmg)
     {
