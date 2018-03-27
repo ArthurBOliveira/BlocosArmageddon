@@ -23,8 +23,8 @@ public class Player : MonoBehaviour
         {
             //Buttons
             case GameType.Buttons:
-                float xPos = transform.position.x + (move * speedBtn);
-                //float xPos = transform.position.x + (Input.GetAxis("Horizontal") * speedBtn * 1.5f);
+                //float xPos = transform.position.x + (move * speedBtn);
+                float xPos = transform.position.x + (Input.GetAxis("Horizontal") * speedBtn * 1.5f);
                 Vector2 playerPos = new Vector2(Mathf.Clamp(xPos, xBorders * -1, xBorders), -4f);
                 transform.position = playerPos;
                 break;

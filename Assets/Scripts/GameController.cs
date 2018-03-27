@@ -85,8 +85,7 @@ public class GameController : MonoBehaviour
                 Instantiate(objects[1], new Vector3(x, y), Quaternion.identity);
                 currObjects++;
             }
-        //Instantiate(objects[1], new Vector3(0, 0), Quaternion.identity);
-        //currObjects++;
+        
     }
 
     private void GameOver()
