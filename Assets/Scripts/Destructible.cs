@@ -6,6 +6,11 @@ public class Destructible : MonoBehaviour
     public int life;
     public int points;
 
+    public int percentDrop;
+
+    // 0 - Clock
+    public GameObject[] upgrades;
+
     protected AudioSource audioS;
     protected SpriteRenderer rend;
     protected BoxCollider2D coll;
@@ -30,10 +35,19 @@ public class Destructible : MonoBehaviour
 
     public IEnumerator DelayedDestroy()
     {
+        SpawnUpgrade();
         audioS.Play();
         coll.enabled = false;
         rend.sprite = new Sprite();
         yield return new WaitForSeconds(2);
         Destroy(gameObject);
+    }
+
+    private void SpawnUpgrade()
+    {
+        int rng = Random.Range(0, 100);
+        if (rng > percentDrop) return;        
+
+        Instantiate(upgrades[Random.Range(0, upgrades.Length - 1)], transform.position, Quaternion.identity);
     }
 }

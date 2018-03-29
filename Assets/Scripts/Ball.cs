@@ -39,8 +39,6 @@ public class Ball : MonoBehaviour
         // Hit the Racket?
         if (col.collider.CompareTag("Player"))
         {
-            Debug.Log("bateu");
-
             // Calculate hit Factor
             float x = hitFactor(transform.position,
                               col.transform.position,

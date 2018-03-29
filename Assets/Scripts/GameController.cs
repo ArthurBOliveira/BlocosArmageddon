@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     // 0 - Indestructible; 1 - Block; 2 - LargeBlock; 3 - Walker; 
-    public GameObject[] objects;
+    public GameObject[] objects;    
     public GameObject ballObject;
     public GameObject playerObject;
     public GameObject btnRestart;
@@ -222,5 +222,10 @@ public class GameController : MonoBehaviour
 
         StartCoroutine(DelayedStart());
     }
-    #endregion    
+
+    public void AddTime(float addTime)
+    {
+        time += addTime;
+    }
+    #endregion
 }
