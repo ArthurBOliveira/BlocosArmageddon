@@ -4,10 +4,10 @@ public class Clock : Upgrade
 {
     public float time;
 
-    public override void Up()
+    public override void Upg()
     {
         gc.AddTime(time);
 
-        base.Up();
+        base.Upg();
     }
 }

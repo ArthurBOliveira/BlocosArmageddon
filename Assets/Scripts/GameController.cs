@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     // 0 - Indestructible; 1 - Block; 2 - LargeBlock; 3 - Walker; 
-    public GameObject[] objects;    
+    public GameObject[] objects;
     public GameObject ballObject;
     public GameObject playerObject;
     public GameObject btnRestart;
@@ -25,12 +25,12 @@ public class GameController : MonoBehaviour
 
     public string currScene;
     public string nextScene;
-	
-	public float initTime;
+
+    public float initTime;
 
     public int score;
+    public int currObjects;
 
-    public int currObjects;    
     private float time;
     private bool isCountingTime;
 
@@ -87,7 +87,7 @@ public class GameController : MonoBehaviour
                 Instantiate(objects[1], new Vector3(x, y), Quaternion.identity);
                 currObjects++;
             }
-        
+
     }
 
     private void GameOver()
@@ -102,7 +102,7 @@ public class GameController : MonoBehaviour
     {
         ball.gameObject.SetActive(false);
         isCountingTime = false;
-        txtCountDown.text = "You win!";        
+        txtCountDown.text = "You win!";
         txtScore.text = "Score: " + score;
         yield return new WaitForSeconds(0.75f);
         txtScoreTime.text = "+" + time.ToString("000");
@@ -154,22 +154,34 @@ public class GameController : MonoBehaviour
         isCountingTime = true;
         ball.gameObject.SetActive(true);
         music.Play();
+        ball.InitialKick();
         yield return new WaitForSeconds(0);
     }
 
-    private IEnumerator TimeChangeAnimation(int change)
+    private IEnumerator TimeChangeAnimation(float change)
     {
-        Debug.Log(change);
-
-        txtTimeChange.text = change.ToString();
-        for (int framecnt = 0; framecnt < 30; framecnt++)
+        if(change > 0)
         {
-            yield return new WaitForSeconds(0.15f);
-            txtTimeChange.fontSize -= 1;
-            txtTimeChange.rectTransform.position = new Vector3(txtTimeChange.rectTransform.position.x + 2, -34);
+            txtTimeChange.text = "+" + change.ToString();
+            txtTimeChange.color = Color.green;
         }
-        txtTimeChange.fontSize = 30;
-        txtTimeChange.rectTransform.position = new Vector3(127, -34);
+        else
+        {
+            txtTimeChange.text = change.ToString();
+            txtTimeChange.color = Color.red;
+        }
+
+        txtTimeChange.fontSize = 1;
+
+        for (int framecnt = 0; framecnt < 25; framecnt++)
+        {
+            if (txtTimeChange.fontSize > 25) continue;
+
+            yield return new WaitForEndOfFrame();
+            txtTimeChange.fontSize += 5;
+        }
+
+        yield return new WaitForSeconds(1);
 
         txtTimeChange.text = "";
     }
@@ -180,9 +192,7 @@ public class GameController : MonoBehaviour
     {
         ballObject.transform.position = new Vector3(0, -3.8f);
 
-        time -= 5;
-
-        //StartCoroutine(TimeChangeAnimation(-5));
+        AddTime(-5);
 
         ball.InitialKick();
     }
@@ -212,7 +222,7 @@ public class GameController : MonoBehaviour
     {
         player.gType = (GameType)gType;
 
-        if(gType == 0)
+        if (gType == 0)
         {
             btnLeft.SetActive(true);
             btnRight.SetActive(true);
@@ -228,6 +238,7 @@ public class GameController : MonoBehaviour
     public void AddTime(float addTime)
     {
         time += addTime;
+        StartCoroutine(TimeChangeAnimation(addTime));
     }
     #endregion
 }

@@ -13,11 +13,11 @@ public class Upgrade : MonoBehaviour
     {
         if (collision.CompareTag("Player") || collision.CompareTag("Ball"))
         {
-            Up();
+            Upg();
         }
     }
 
-    public virtual void Up()
+    public virtual void Upg()
     {
         Destroy(gameObject);
     }

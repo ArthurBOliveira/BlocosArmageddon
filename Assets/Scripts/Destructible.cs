@@ -8,7 +8,7 @@ public class Destructible : MonoBehaviour
 
     public int percentDrop;
 
-    // 0 - Clock
+    // 0 - Clock; 1 - Missile
     public GameObject[] upgrades;
 
     protected AudioSource audioS;
@@ -46,8 +46,11 @@ public class Destructible : MonoBehaviour
     private void SpawnUpgrade()
     {
         int rng = Random.Range(0, 100);
-        if (rng > percentDrop) return;        
+        if (rng > percentDrop) return;
 
-        Instantiate(upgrades[Random.Range(0, upgrades.Length - 1)], transform.position, Quaternion.identity);
+        int upg = Random.Range(0, upgrades.Length - 1);
+        Debug.Log(upg);
+
+        Instantiate(upgrades[upgrades.Length - 1], transform.position, Quaternion.identity);
     }
 }

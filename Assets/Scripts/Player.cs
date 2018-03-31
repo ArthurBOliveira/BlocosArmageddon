@@ -13,7 +13,8 @@ public class Player : MonoBehaviour
 
     private Rigidbody2D rb2d;
 
-    private float move;    
+    private float move;
+    public int missiles;
 
     private void Awake()
     {
@@ -26,8 +27,8 @@ public class Player : MonoBehaviour
         {
             //Buttons
             case GameType.Buttons:
-                //float xPos = transform.position.x + (move * speedBtn);
-                float xPos = transform.position.x + (Input.GetAxis("Horizontal") * speedBtn * 1.5f);
+                float xPos = transform.position.x + (move * speedBtn);
+                //float xPos = transform.position.x + (Input.GetAxis("Horizontal") * speedBtn * 1.5f);
                 Vector2 playerPos = new Vector2(Mathf.Clamp(xPos, xBorders * -1, xBorders), -4f);
                 transform.position = playerPos;
                 break;
@@ -75,11 +76,19 @@ public class Player : MonoBehaviour
 
     public void Shoot()
     {
+        if (missiles <= 0) return;
+
         GameObject miss = Instantiate(missile, transform.position, Quaternion.identity);
 
         miss.GetComponent<Rigidbody2D>().AddForce(Vector2.up * projectileSpeed);
 
         Destroy(miss, 5f);
+        missiles--;
+    }
+
+    public void AddMissile(int missile)
+    {
+        missiles += missile;
     }
 }
 
