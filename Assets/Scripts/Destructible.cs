@@ -26,7 +26,7 @@ public class Destructible : MonoBehaviour
     {
         life -= dmg;
 
-        if (life <= 0)
+        if (life == 0)
         {
             StartCoroutine(DelayedDestroy());
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameController>().ChangeCurrObjects(-1, points);

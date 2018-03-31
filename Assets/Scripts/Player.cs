@@ -6,7 +6,10 @@ public class Player : MonoBehaviour
     public float speedTouch;
     public float speedAcc;
     public float xBorders;
+    public float projectileSpeed;
     public GameType gType;
+
+    public GameObject missile;
 
     private Rigidbody2D rb2d;
 
@@ -23,8 +26,8 @@ public class Player : MonoBehaviour
         {
             //Buttons
             case GameType.Buttons:
-                float xPos = transform.position.x + (move * speedBtn);
-                //float xPos = transform.position.x + (Input.GetAxis("Horizontal") * speedBtn * 1.5f);
+                //float xPos = transform.position.x + (move * speedBtn);
+                float xPos = transform.position.x + (Input.GetAxis("Horizontal") * speedBtn * 1.5f);
                 Vector2 playerPos = new Vector2(Mathf.Clamp(xPos, xBorders * -1, xBorders), -4f);
                 transform.position = playerPos;
                 break;
@@ -53,6 +56,10 @@ public class Player : MonoBehaviour
 
                 rb2d.position = new Vector2(Mathf.Clamp(rb2d.position.x, xBorders * -1, xBorders), -4f);
                 break;
+
+            case GameType.Keyboard:
+
+                break;
         }
     }
 
@@ -65,11 +72,21 @@ public class Player : MonoBehaviour
     {
         move = 0;
     }
+
+    public void Shoot()
+    {
+        GameObject miss = Instantiate(missile, transform.position, Quaternion.identity);
+
+        miss.GetComponent<Rigidbody2D>().AddForce(Vector2.up * projectileSpeed);
+
+        Destroy(miss, 5f);
+    }
 }
 
 public enum GameType
 {
     Buttons,
     Touch,
-    Accelerometer
+    Accelerometer,
+    Keyboard,
 }

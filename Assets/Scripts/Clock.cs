@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-public class Clock : Upgrades
+public class Clock : Upgrade
 {
     public float time;
 
-    public override void Upgrade()
+    public override void Up()
     {
         gc.AddTime(time);
 
-        base.Upgrade();
+        base.Up();
     }
 }

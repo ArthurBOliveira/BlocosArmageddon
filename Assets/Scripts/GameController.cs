@@ -25,10 +25,12 @@ public class GameController : MonoBehaviour
 
     public string currScene;
     public string nextScene;
+	
+	public float initTime;
 
     public int score;
 
-    private int currObjects;    
+    public int currObjects;    
     private float time;
     private bool isCountingTime;
 
@@ -49,7 +51,7 @@ public class GameController : MonoBehaviour
     {
         btnContinue.SetActive(false);
         btnRestart.SetActive(false);
-        time = 180;
+        time = initTime;
         ball.gameObject.SetActive(false);
         isCountingTime = false;
     }

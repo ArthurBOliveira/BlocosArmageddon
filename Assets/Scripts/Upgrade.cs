@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Upgrades : MonoBehaviour
+public class Upgrade : MonoBehaviour
 {
     protected GameController gc;
 
@@ -13,11 +13,11 @@ public class Upgrades : MonoBehaviour
     {
         if (collision.CompareTag("Player") || collision.CompareTag("Ball"))
         {
-            Upgrade();
+            Up();
         }
     }
 
-    public virtual void Upgrade()
+    public virtual void Up()
     {
         Destroy(gameObject);
     }
