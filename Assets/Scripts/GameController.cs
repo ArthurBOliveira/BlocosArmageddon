@@ -199,12 +199,12 @@ public class GameController : MonoBehaviour
 
     public void NextLevel()
     {
-        SceneManager.LoadScene(currScene);
+        SceneManager.LoadScene(nextScene);
     }
 
     public void RestartLevel()
     {
-        SceneManager.LoadScene(nextScene);
+        SceneManager.LoadScene(currScene);
     }
 
     public void ChangeCurrObjects(int change, int points)

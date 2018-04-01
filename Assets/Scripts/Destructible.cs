@@ -51,6 +51,6 @@ public class Destructible : MonoBehaviour
         int upg = Random.Range(0, upgrades.Length - 1);
         Debug.Log(upg);
 
-        Instantiate(upgrades[upgrades.Length - 1], transform.position, Quaternion.identity);
+        Instantiate(upgrades[upg], transform.position, Quaternion.identity);
     }
 }
