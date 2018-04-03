@@ -19,7 +19,7 @@ public class Destructible : MonoBehaviour
     {
         audioS = GetComponent<AudioSource>();
         rend = GetComponent<SpriteRenderer>();
-        coll = GetComponent<BoxCollider2D>();        
+        coll = GetComponent<BoxCollider2D>();
     }
 
     public virtual void CauseDamage(int dmg)
@@ -35,8 +35,8 @@ public class Destructible : MonoBehaviour
 
     public IEnumerator DelayedDestroy()
     {
-        SpawnUpgrade();
         audioS.Play();
+        SpawnUpgrade();
         coll.enabled = false;
         rend.sprite = new Sprite();
         yield return new WaitForSeconds(2);
@@ -48,7 +48,7 @@ public class Destructible : MonoBehaviour
         int rng = Random.Range(0, 100);
         if (rng > percentDrop) return;
 
-        int upg = Random.Range(0, upgrades.Length - 1);
+        int upg = Random.Range(0, upgrades.Length);
         Debug.Log(upg);
 
         Instantiate(upgrades[upg], transform.position, Quaternion.identity);
