@@ -13,7 +13,7 @@ public class GameController : MonoBehaviour
     public GameObject btnContinue;
     public GameObject btnLeft;
     public GameObject btnRight;
-    public GameObject btnBtnStart;
+    public GameObject btnStart;
     public GameObject btnTouchStart;
     public GameObject btnAccStart;
 
@@ -72,22 +72,6 @@ public class GameController : MonoBehaviour
         int sec = (int)time % 60;
 
         txtTime.text = min + ":" + sec;
-    }
-
-    private void SpawnObjects()
-    {
-        //Indestructibles
-        Instantiate(objects[0], new Vector3(2.0f, -1), Quaternion.identity);
-        Instantiate(objects[0], new Vector3(-2.0f, -1), Quaternion.identity);
-
-        //Blocks
-        for (float y = 0; y <= 3.5f; y += 0.55f)
-            for (float x = -2.75f; x <= 2.75f; x += 0.45f)
-            {
-                Instantiate(objects[1], new Vector3(x, y), Quaternion.identity);
-                currObjects++;
-            }
-
     }
 
     private void GameOver()
@@ -188,6 +172,11 @@ public class GameController : MonoBehaviour
     #endregion
 
     #region Publics
+    public virtual void SpawnObjects()
+    {
+
+    }
+
     public void ResetBall()
     {
         ballObject.transform.position = new Vector3(0, -3.8f);
@@ -228,7 +217,7 @@ public class GameController : MonoBehaviour
             btnRight.SetActive(true);
         }
 
-        btnBtnStart.SetActive(false);
+        btnStart.SetActive(false);
         btnTouchStart.SetActive(false);
         btnAccStart.SetActive(false);
 
