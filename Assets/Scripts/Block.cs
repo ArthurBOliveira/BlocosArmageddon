@@ -17,7 +17,7 @@ public class Block : Destructible
     {
         base.CauseDamage(dmg);
 
-        txtLife.text = life == 0 ? "" : life.ToString();
+        txtLife.text = life <= 0 ? "" : life.ToString();
 
         //if (life > 0)
         //    rend.sprite = sprites[life - 1];

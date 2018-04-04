@@ -133,13 +133,13 @@ public class GameController : MonoBehaviour
         txtCountDown.text = "Start!";
         yield return new WaitForSeconds(0.75f);
         txtCountDown.text = "";
-
         SpawnObjects();
         isCountingTime = true;
-        ball.gameObject.SetActive(true);
         music.Play();
+        ball.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(0.1f);
         ball.InitialKick();
-        yield return new WaitForSeconds(0);
     }
 
     private IEnumerator TimeChangeAnimation(float change)
