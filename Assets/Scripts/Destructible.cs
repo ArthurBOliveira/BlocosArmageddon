@@ -14,12 +14,16 @@ public class Destructible : MonoBehaviour
     protected AudioSource audioS;
     protected SpriteRenderer rend;
     protected BoxCollider2D coll;
+    protected TextMesh txtLife;
 
     private void Awake()
     {
         audioS = GetComponent<AudioSource>();
         rend = GetComponent<SpriteRenderer>();
         coll = GetComponent<BoxCollider2D>();
+        txtLife = GetComponentInChildren<TextMesh>();
+
+        txtLife.text = life.ToString();
     }
 
     public virtual void CauseDamage(int dmg)
@@ -31,6 +35,8 @@ public class Destructible : MonoBehaviour
             StartCoroutine(DelayedDestroy());
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameController>().ChangeCurrObjects(-1, points);
         }
+
+        txtLife.text = life <= 0 ? "" : life.ToString();
     }
 
     public IEnumerator DelayedDestroy()
@@ -49,7 +55,6 @@ public class Destructible : MonoBehaviour
         if (rng > percentDrop) return;
 
         int upg = Random.Range(0, upgrades.Length);
-        Debug.Log(upg);
 
         Instantiate(upgrades[upg], transform.position, Quaternion.identity);
     }

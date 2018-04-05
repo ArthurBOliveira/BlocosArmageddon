@@ -12,7 +12,7 @@ public class Explosion : MonoBehaviour
 
     private void Awake()
     {
-        coll = GetComponent<CircleCollider2D>();        
+        coll = GetComponent<CircleCollider2D>();
     }
 
     private void Start()
@@ -25,10 +25,7 @@ public class Explosion : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Quebrou!!");
         if (collision.CompareTag(canHitTag))
-        {
             collision.gameObject.GetComponent<Destructible>().CauseDamage(damage);
-        }
     }
 }
