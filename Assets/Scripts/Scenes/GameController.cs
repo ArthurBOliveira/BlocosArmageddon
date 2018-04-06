@@ -89,11 +89,11 @@ public class GameController : MonoBehaviour
         txtCountDown.text = "You win!";
         txtScore.text = "Score: " + score;
         yield return new WaitForSeconds(0.75f);
-        txtScoreTime.text = "+" + time.ToString("000");
+        txtScoreTime.text = "x" + time.ToString("000");
 
         yield return new WaitForSeconds(0.75f);
         txtScoreTime.text = "";
-        txtScore.text = "Score: " + (score + time).ToString("000");
+        txtScore.text = "Score: " + (score * time).ToString("0000");
 
         btnRestart.SetActive(true);
         btnContinue.SetActive(true);

@@ -22,4 +22,9 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene("Infinity");
     }
+
+    public void Site()
+    {
+        Application.OpenURL("https://nivelhard.herokuapp.com/");
+    }
 }

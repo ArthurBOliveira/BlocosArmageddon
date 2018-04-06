@@ -21,6 +21,11 @@ public class Level3 : GameController
                     Instantiate(objects[2], new Vector3(x, y), Quaternion.identity);
                     currObjects++;
                 }
+                else if (y == 0.55f || y == 2.75f && !(x >= -0.05f && x <= 0.05))
+                {
+                    Instantiate(objects[2], new Vector3(x, y), Quaternion.identity);
+                    currObjects++;
+                }
                 else if(x >= -0.05f && x <= 0.05)
                     Instantiate(objects[0], new Vector3(x, y), Quaternion.identity);
             }
