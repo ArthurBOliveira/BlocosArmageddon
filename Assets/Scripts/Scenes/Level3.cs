@@ -14,7 +14,7 @@ public class Level3 : GameController
         //Blocks
         for (float y = 0; y <= 3.5f; y += 0.55f)
         {
-            for (float x = -3.2f; x <= 3.2f; x += 0.45f)
+            for (float x = -2.75f; x <= 2.75f; x += 0.45f)
             {
                 if (y == 0 || y == 3.3f)
                 {

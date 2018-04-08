@@ -193,6 +193,7 @@ public class GameController : MonoBehaviour
 
     public void RestartLevel()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(currScene);
     }
 
@@ -205,6 +206,7 @@ public class GameController : MonoBehaviour
     public void PauseResumeGame()
     {
         Time.timeScale = Time.timeScale == 0 ? 1 : 0;
+        btnRestart.SetActive(Time.timeScale == 0);
     }
 
     public void PickGameType(int gType)
