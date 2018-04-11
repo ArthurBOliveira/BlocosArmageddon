@@ -1,25 +1,32 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Loading : MonoBehaviour
 {
-    void Start()
+    public Button btnNext;
+    public Text txtLoading;
+
+    private AsyncOperation ao;
+
+    private void Start()
     {
-        StartCoroutine(AsynchronousLoad("Level 1"));
+        btnNext.gameObject.SetActive(false);
+        ao = SceneManager.LoadSceneAsync("Level 1");
+        ao.allowSceneActivation = false;
+    }    
+
+    private void Update()
+    {
+        if(ao.progress >= 0.9f )
+        {
+            btnNext.gameObject.SetActive(true);
+            txtLoading.gameObject.SetActive(false);
+        }
     }
 
-    IEnumerator AsynchronousLoad(string scene)
+    public void StartLevel()
     {
-        yield return null;
-
-        AsyncOperation ao = SceneManager.LoadSceneAsync(scene);
-        ao.allowSceneActivation = false;
-
-        while (!ao.isDone)
-        {
-            ao.allowSceneActivation = true;
-            yield return null;
-        }
+        ao.allowSceneActivation = true;
     }
 }

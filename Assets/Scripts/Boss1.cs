@@ -37,20 +37,48 @@ public class Boss1 : Destructible
         }
     }
 
+    private IEnumerator MoveAround()
+    {
+        Vector3 pointA = new Vector3(0, 3.75f);
+        Vector3 pointB = new Vector3(2, 2.25f);
+        Vector3 pointC = new Vector3(-2, 2.25f);
+
+        while (true)
+        {
+            yield return StartCoroutine(MoveObject(transform, pointA, pointB, 3.0f));
+            yield return StartCoroutine(MoveObject(transform, pointB, pointA, 3.0f));
+            yield return StartCoroutine(MoveObject(transform, pointA, pointC, 3.0f));
+            yield return StartCoroutine(MoveObject(transform, pointC, pointA, 3.0f));
+        }
+    }
+
+    private IEnumerator MoveObject(Transform thisTransform, Vector3 startPos, Vector3 endPos, float time)
+    {
+        var i = 0.0f;
+        var rate = 1.0f / time;
+        while (i < 1.0f)
+        {
+            i += Time.deltaTime * rate;
+            thisTransform.position = Vector3.Lerp(startPos, endPos, i);
+            yield return null;
+        }
+        GetComponent<SpriteRenderer>().flipX = !GetComponent<SpriteRenderer>().flipX;
+    }
+
     private void InstantiateDependents()
     {
         Vector3 pos;
 
-        pos = new Vector3(-3f, 0.75f);
+        pos = new Vector3(-2.5f, 0.75f);
         InstantiateDependent(pos);
 
-        pos = new Vector3(3f, 0.75f);
+        pos = new Vector3(2.5f, 0.75f);
         InstantiateDependent(pos);
 
-        pos = new Vector3(-3f, 3.5f);
+        pos = new Vector3(-2.5f, 3.5f);
         InstantiateDependent(pos);
 
-        pos = new Vector3(3f, 3.5f);
+        pos = new Vector3(2.5f, 3.5f);
         InstantiateDependent(pos);
     }
 
@@ -86,6 +114,7 @@ public class Boss1 : Destructible
         {
             txtLife.text = life.ToString();
             StartCoroutine(StartingShoot());
+            StartCoroutine(MoveAround());
         }
     }
 

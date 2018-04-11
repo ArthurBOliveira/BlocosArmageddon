@@ -19,6 +19,7 @@ public class Level4 : GameController
         //Walkers
         Instantiate(objects[3], new Vector3(2, 3.75f), Quaternion.identity);
         Instantiate(objects[3], new Vector3(-2, 3.75f), Quaternion.identity);
+        currObjects += 2;
 
         //Blocks
         for (float y = 0; y <= 3.5f; y += 0.55f)
