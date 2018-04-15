@@ -13,9 +13,11 @@ public class GameController : MonoBehaviour
     public GameObject btnContinue;
     public GameObject btnLeft;
     public GameObject btnRight;
-    public GameObject btnStart;
-    public GameObject btnTouchStart;
-    public GameObject btnAccStart;
+    public GameObject btnNewBall;
+    public GameObject btnEquipment;
+
+    public GameObject GameplaysOptions;
+    public GameObject EquipmentsOptions;
 
     public Text txtTime;
     public Text txtTimeChange;
@@ -49,10 +51,14 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
+        EquipmentsOptions.SetActive(true);
+        GameplaysOptions.SetActive(false);
+
+        btnEquipment.SetActive(false);
+        btnNewBall.SetActive(false);
         btnContinue.SetActive(false);
         btnRestart.SetActive(false);
         time = initTime;
-        ball.gameObject.SetActive(false);
         isCountingTime = false;
     }
 
@@ -137,6 +143,8 @@ public class GameController : MonoBehaviour
         isCountingTime = true;
         music.Play();
         ball.gameObject.SetActive(true);
+        btnEquipment.SetActive(true);
+        btnNewBall.SetActive(true);
 
         yield return new WaitForSeconds(0.1f);
         ball.InitialKick();
@@ -179,8 +187,6 @@ public class GameController : MonoBehaviour
 
     public void ResetBall()
     {
-        ballObject.transform.position = new Vector3(0, -3.8f);
-
         AddTime(-5);
 
         ball.InitialKick();
@@ -219,11 +225,30 @@ public class GameController : MonoBehaviour
             btnRight.SetActive(true);
         }
 
-        btnStart.SetActive(false);
-        btnTouchStart.SetActive(false);
-        btnAccStart.SetActive(false);
+        GameplaysOptions.SetActive(false);
 
         StartCoroutine(DelayedStart());
+    }
+
+    public void PickEquipment(int eType)
+    {
+        Equipments type = (Equipments)eType;
+
+        switch (type)
+        {
+            case Equipments.Missiles:
+                btnEquipment.GetComponent<MissileEquipment>().enabled = true;
+                Destroy(btnEquipment.GetComponent<StrongBallEquipment>());
+                break;
+
+            case Equipments.Strength:
+                btnEquipment.GetComponent<StrongBallEquipment>().enabled = true;
+                Destroy(btnEquipment.GetComponent<MissileEquipment>());
+                break;
+        }
+
+        EquipmentsOptions.SetActive(false);
+        GameplaysOptions.SetActive(true);
     }
 
     public void AddTime(float addTime)

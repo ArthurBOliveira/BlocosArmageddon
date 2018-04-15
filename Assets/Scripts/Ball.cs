@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
@@ -6,14 +7,17 @@ public class Ball : MonoBehaviour
     public float speed;
     public float maxSpeed;
     public Vector2 currSpeed;
+    public bool isStrengthened;
 
     private Rigidbody2D rb2d;
+    private SpriteRenderer sr;
+    private TrailRenderer tr;
 
-    private void Start()
+    private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
-
-        InitialKick();
+        sr = GetComponent<SpriteRenderer>();
+        tr = GetComponent<TrailRenderer>();
     }
 
     private void Update()
@@ -52,7 +56,6 @@ public class Ball : MonoBehaviour
         }
     }
 
-
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Destructible"))
@@ -75,9 +78,32 @@ public class Ball : MonoBehaviour
 
     public void InitialKick()
     {
+        transform.position = new Vector3(0, -3.8f);
+
         float x = Random.Range(-0.5f, 0.51f);
 
         rb2d.velocity = Vector2.zero;
         rb2d.AddForce(new Vector2(x, 1) * speed);
+    }
+
+    public IEnumerator IncreaseStrength(int dmg, int time, Color color)
+    {
+        if (!isStrengthened)
+        {
+            Color oldColorSprite = sr.color;
+            Color oldStartColorTrail = tr.startColor;
+
+            isStrengthened = true;
+            damage += dmg;
+            sr.color = color;
+            tr.startColor = color;
+
+            yield return new WaitForSeconds(time);
+
+            damage -= dmg;
+            sr.color = oldColorSprite;
+            tr.startColor = oldStartColorTrail;
+            isStrengthened = false;
+        }
     }
 }
