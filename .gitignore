@@ -6,6 +6,7 @@
 /Assets/AssetStoreTools*
 /Builds/
 /Builds/Key/
+/Builds/Android/
 /Key/
 
 # Visual Studio 2015 cache directory
@@ -26,9 +27,11 @@ ExportedObj/
 *.svd
 *.pdb
 *.keystore
+*.apk
 
 # Unity3D generated meta files
 *.pidb.meta
+*.meta
 
 # Unity3D Generated File On Crash Reports
 sysinfo.txt

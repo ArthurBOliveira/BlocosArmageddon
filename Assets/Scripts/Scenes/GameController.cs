@@ -27,6 +27,8 @@ public class GameController : MonoBehaviour
 
     public string currScene;
     public string nextScene;
+    public string achievCode;
+    public string leaderboardCode;
 
     public float initTime;
 
@@ -88,6 +90,20 @@ public class GameController : MonoBehaviour
         btnRestart.SetActive(true);
     }
 
+    private void CompleteAchievement()
+    {
+        if (!Social.localUser.authenticated) return;
+
+        Social.ReportProgress(achievCode, 100, (bool sucess) => { });
+    }
+
+    private void SaveScore(int score)
+    {
+        if (!Social.localUser.authenticated) return;
+
+        Social.ReportScore(score, leaderboardCode, (bool sucess) => { });
+    }
+
     private IEnumerator Win()
     {
         ball.gameObject.SetActive(false);
@@ -99,7 +115,11 @@ public class GameController : MonoBehaviour
 
         yield return new WaitForSeconds(0.75f);
         txtScoreTime.text = "";
-        txtScore.text = "Score: " + (score * time).ToString("0000");
+        score += (int)(time * 2);
+        txtScore.text = "Score: " + (score).ToString("0000");
+
+        CompleteAchievement();
+        SaveScore(score);
 
         btnRestart.SetActive(true);
         btnContinue.SetActive(true);
