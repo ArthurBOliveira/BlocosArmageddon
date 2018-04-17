@@ -21,11 +21,19 @@ public class MainMenu : MonoBehaviour
         btnAchievements.SetActive(false);
         btnLeaderboards.SetActive(false);
 
-        PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder().Build();
+        PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
+            // enables saving game progress.
+            .EnableSavedGames()
+            .Build();
         PlayGamesPlatform.InitializeInstance(config);
         PlayGamesPlatform.Activate();
 
         GoogleLogin();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape)) Application.Quit();
     }
 
     public void PlayGame()
@@ -62,7 +70,7 @@ public class MainMenu : MonoBehaviour
 
             btnAchievements.SetActive(true);
             btnLeaderboards.SetActive(true);
-        });        
+        });
     }
 
     public void ShowAchievementsUI()

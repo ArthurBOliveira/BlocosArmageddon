@@ -5,12 +5,15 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    // 0 - Indestructible; 1 - Block; 2 - LargeBlock; 3 - Walker; 
     public GameObject[] objects;
     public GameObject ballObject;
     public GameObject playerObject;
+
+    public GameObject imgDegrade;
     public GameObject btnRestart;
     public GameObject btnContinue;
+    public GameObject btnMenuBack;
+
     public GameObject btnLeft;
     public GameObject btnRight;
     public GameObject btnNewBall;
@@ -29,6 +32,7 @@ public class GameController : MonoBehaviour
     public string nextScene;
     public string achievCode;
     public string leaderboardCode;
+    public string levelPickerScene;
 
     public float initTime;
 
@@ -56,16 +60,20 @@ public class GameController : MonoBehaviour
         EquipmentsOptions.SetActive(true);
         GameplaysOptions.SetActive(false);
 
+        imgDegrade.SetActive(false);
         btnEquipment.SetActive(false);
         btnNewBall.SetActive(false);
         btnContinue.SetActive(false);
         btnRestart.SetActive(false);
+        btnMenuBack.SetActive(false);
         time = initTime;
         isCountingTime = false;
     }
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape)) ReturnToLevelPicker();
+
         if (!isCountingTime) return;
 
         if (time <= 0)
@@ -88,6 +96,8 @@ public class GameController : MonoBehaviour
         isCountingTime = false;
         txtCountDown.text = "Game Over";
         btnRestart.SetActive(true);
+        btnMenuBack.SetActive(true);
+        imgDegrade.SetActive(true);
     }
 
     private void CompleteAchievement()
@@ -123,12 +133,15 @@ public class GameController : MonoBehaviour
 
         btnRestart.SetActive(true);
         btnContinue.SetActive(true);
+        btnMenuBack.SetActive(true);
+        imgDegrade.SetActive(true);
 
         yield return new WaitForSeconds(0);
     }
 
     private IEnumerator DelayedStart()
     {
+        Time.timeScale = 1;
         txtCountDown.text = "3";
         for (int framecnt = 0; framecnt < 30; framecnt++)
         {
@@ -233,6 +246,8 @@ public class GameController : MonoBehaviour
     {
         Time.timeScale = Time.timeScale == 0 ? 1 : 0;
         btnRestart.SetActive(Time.timeScale == 0);
+        btnMenuBack.SetActive(Time.timeScale == 0);
+        imgDegrade.SetActive(Time.timeScale == 0);
     }
 
     public void PickGameType(int gType)
@@ -275,6 +290,11 @@ public class GameController : MonoBehaviour
     {
         time += addTime;
         StartCoroutine(TimeChangeAnimation(addTime));
+    }
+
+    public void ReturnToLevelPicker()
+    {
+        SceneManager.LoadScene(levelPickerScene);
     }
     #endregion
 }
